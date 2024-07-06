@@ -1,0 +1,15 @@
+{
+  "name": "chunked-vox",
+  "version": "1.0.0",
+  "description": "Writes large voxel models in Magicavoxel format",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "BunnyNabbit",
+  "license": "MIT",
+  "dependencies": {
+    "ndarray": "^1.0.19",
+    "smart-buffer": "^4.2.0"
+  }
+}
