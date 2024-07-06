@@ -8,6 +8,9 @@
   },
   "author": "BunnyNabbit",
   "license": "MIT",
+  "keywords": [
+    "magicavoxel"
+  ],
   "dependencies": {
     "ndarray": "^1.0.19",
     "smart-buffer": "^4.2.0"
