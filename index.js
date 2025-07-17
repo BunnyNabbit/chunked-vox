@@ -8,6 +8,7 @@ function keyToVec3(key, separator) {
 	return new Vector3(components[0], components[1], components[2])
 }
 class Vector3 {
+	/** */
 	constructor(x, y, z) {
 		this.x = x
 		this.y = y
@@ -15,26 +16,31 @@ class Vector3 {
 	}
 }
 class Section {
+	/** */
 	constructor(sectionSize) {
 		this.data = ndarray(new Uint8Array(sectionSize * sectionSize * sectionSize), [sectionSize, sectionSize, sectionSize])
 	}
+
 	setBlock(x, y, z, i) {
 		this.data.set(x, y, z, i)
 	}
+
 	getBlock(x, y, z) {
 		return this.data.get(x, y, z)
 	}
 }
 
 class VoxelModelWriter {
+	/** */
 	constructor(palette, sectionSize = 64) {
 		this.chunks = new Map()
 		this.palette = palette
 		this.sectionSize = sectionSize
 		this.sectionSizeOffset = this.sectionSize - 1
 	}
-	// MagicaVoxel coord system (Z is gravity direction)
+
 	setBlock(x, y, z, i) {
+		// MagicaVoxel coord system (Z is gravity direction)
 		const key = vec3Key(new Vector3(Math.floor(x / this.sectionSize), Math.floor(y / this.sectionSize), Math.floor(z / this.sectionSize)), " ")
 		let chunk = this.chunks.get(key)
 		if (!chunk) {
@@ -43,7 +49,9 @@ class VoxelModelWriter {
 		}
 		chunk.setBlock(x & this.sectionSizeOffset, y & this.sectionSizeOffset, z & this.sectionSizeOffset, i)
 	}
-	writeVox(reset) { // if reset, internal data will be released during writing.
+
+	writeVox(reset) {
+		// if reset, internal data will be released during writing.
 		function writeAsciiString(buffer, str) {
 			const asciiBuffer = Buffer.from(str, "ascii")
 			buffer.writeInt32LE(asciiBuffer.length)
@@ -61,7 +69,8 @@ class VoxelModelWriter {
 		fileBuffer.writeInt32LE(150) // version
 		fileBuffer.writeString("MAIN")
 		const mainChunk = new SmartBuffer()
-		this.chunks.forEach((chunk) => { // write voxel chunks
+		this.chunks.forEach((chunk) => {
+			// write voxel chunks
 			mainChunk.writeString("SIZE")
 			mainChunk.writeInt32LE(12) // content length
 			mainChunk.writeInt32LE(0) // children length
@@ -113,15 +122,17 @@ class VoxelModelWriter {
 		writeDict(groupNodeChunk, {})
 		groupNodeChunk.writeInt32LE(this.chunks.size) // number of children nodes
 		// console.log(this.chunks.size)
-		for (let index = 0; index < this.chunks.size; index++) { // children nodes (transform nodes)
+		for (let index = 0; index < this.chunks.size; index++) {
+			// children nodes (transform nodes)
 			// console.log((index * 2) + 2)
-			groupNodeChunk.writeInt32LE((index * 2) + 2)
+			groupNodeChunk.writeInt32LE(index * 2 + 2)
 		}
 		mainChunk.writeInt32LE(groupNodeChunk.length) // content length
 		mainChunk.writeInt32LE(0) // children length
 		mainChunk.writeBuffer(groupNodeChunk.toBuffer())
 
-		this.chunks.forEach((chunk, key) => { // write shape nodes and transforms
+		this.chunks.forEach((chunk, key) => {
+			// write shape nodes and transforms
 			mainChunk.writeString("nTRN")
 			const transformNodeChunk = new SmartBuffer()
 			transformNodeChunk.writeInt32LE(nodeIndex)
@@ -134,7 +145,7 @@ class VoxelModelWriter {
 			const vec3 = keyToVec3(key, " ")
 			// console.log(vec3)
 			writeDict(transformNodeChunk, {
-				_t: vec3Key({ x: vec3.x * this.sectionSize, y: vec3.y * this.sectionSize, z: (vec3.z * this.sectionSize) + (Math.floor(this.sectionSize / 2)) }, " "),
+				_t: vec3Key({ x: vec3.x * this.sectionSize, y: vec3.y * this.sectionSize, z: vec3.z * this.sectionSize + Math.floor(this.sectionSize / 2) }, " "),
 			})
 			mainChunk.writeInt32LE(transformNodeChunk.length) // content length
 			mainChunk.writeInt32LE(0) // children length
@@ -178,5 +189,5 @@ class VoxelModelWriter {
 }
 
 module.exports = {
-	VoxelModelWriter
+	VoxelModelWriter,
 }
