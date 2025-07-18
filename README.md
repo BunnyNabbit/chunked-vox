@@ -1,3 +1,9 @@
+# chunked-vox
+
+[![NPM version badge](https://img.shields.io/npm/v/chunked-vox.svg)](http://npmjs.com/package/chunked-vox)
+[![Open GitHub issues badge](https://img.shields.io/github/issues/bunnynabbit/chunked-vox)](https://github.com/BunnyNabbit/chunked-vox/issues)
+[![Test status badge](https://github.com/BunnyNabbit/chunked-vox/actions/workflows/ci.yml/badge.svg)](https://github.com/BunnyNabbit/chunked-vox/actions/workflows/ci.yml)
+
 Writes large voxel models in Magicavoxel format
 ```js
 const { VoxelModelWriter } = require("chunked-vox")
