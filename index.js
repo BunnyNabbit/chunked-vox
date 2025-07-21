@@ -31,14 +31,19 @@ class Section {
 }
 
 class VoxelModelWriter {
-	/** */
+	/** Creates a VoxelModelWriter instance. */
 	constructor(palette, sectionSize = 64) {
 		this.chunks = new Map()
 		this.palette = palette
 		this.sectionSize = sectionSize
 		this.sectionSizeOffset = this.sectionSize - 1
 	}
-
+	/**Set a voxel wizh a color palette index.
+	 * @param {number} x - X coordinate of voxel
+	 * @param {number} x - Y coordinate of voxel
+	 * @param {number} x - Z coordinate of voxel
+	 * @param {number} i - Color palette index
+	 */
 	setBlock(x, y, z, i) {
 		// MagicaVoxel coord system (Z is gravity direction)
 		const key = vec3Key(new Vector3(Math.floor(x / this.sectionSize), Math.floor(y / this.sectionSize), Math.floor(z / this.sectionSize)), " ")
@@ -49,7 +54,10 @@ class VoxelModelWriter {
 		}
 		chunk.setBlock(x & this.sectionSizeOffset, y & this.sectionSizeOffset, z & this.sectionSizeOffset, i)
 	}
-
+	/**Generate a Magicavoxel formatted buffer.
+	 * @param {boolean} reset - Release internal data used for representing model.
+	 * @returns {Buffer} A buffer containing the voxel model in MagicaVoxel format.
+	 */
 	writeVox(reset) {
 		// if reset, internal data will be released during writing.
 		function writeAsciiString(buffer, str) {
