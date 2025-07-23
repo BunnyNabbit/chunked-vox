@@ -54,10 +54,10 @@ class VoxelModelWriter {
 		chunk.setBlock(x & this.sectionSizeOffset, y & this.sectionSizeOffset, z & this.sectionSizeOffset, i)
 	}
 	/**Generate a Magicavoxel formatted buffer.
-	 * @param {boolean} [reset=false] - Release internal data used for representing model.
+	 * @param {boolean} [releaseInternalData=false] - Release internal data used for representing model.
 	 * @returns {Buffer} A buffer containing the voxel model in MagicaVoxel format.
 	 */
-	writeVox(reset = false) {
+	writeVox(releaseInternalData = false) {
 		const fileBuffer = new SmartBuffer()
 		fileBuffer.writeString("VOX ")
 		fileBuffer.writeInt32LE(150) // version
@@ -92,7 +92,7 @@ class VoxelModelWriter {
 			mainChunk.writeInt32LE(0) // children length
 			mainChunk.writeInt32LE(voxelCount)
 			mainChunk.writeBuffer(xyziBuffer.toBuffer())
-			if (reset) chunk.data = null
+			if (releaseInternalData) chunk.data = null
 		})
 		let nodeIndex = 2
 		let modelIndex = 0
@@ -115,10 +115,8 @@ class VoxelModelWriter {
 		groupNodeChunk.writeInt32LE(1) // node index of the shape
 		VoxelModelWriter.writeDict(groupNodeChunk, {})
 		groupNodeChunk.writeInt32LE(this.chunks.size) // number of children nodes
-		// console.log(this.chunks.size)
 		for (let index = 0; index < this.chunks.size; index++) {
 			// children nodes (transform nodes)
-			// console.log((index * 2) + 2)
 			groupNodeChunk.writeInt32LE(index * 2 + 2)
 		}
 		mainChunk.writeInt32LE(groupNodeChunk.length) // content length
@@ -137,7 +135,6 @@ class VoxelModelWriter {
 			transformNodeChunk.writeInt32LE(1) // number of frames (always 1)
 			// a frame
 			const vec3 = keyToVec3(key, " ")
-			// console.log(vec3)
 			VoxelModelWriter.writeDict(transformNodeChunk, {
 				_t: vec3Key({ x: vec3.x * this.sectionSize, y: vec3.y * this.sectionSize, z: vec3.z * this.sectionSize + Math.floor(this.sectionSize / 2) }, " "),
 			})
@@ -159,7 +156,7 @@ class VoxelModelWriter {
 			mainChunk.writeInt32LE(0) // children length
 			mainChunk.writeBuffer(shapeNodeChunk.toBuffer())
 		})
-		if (reset) this.chunks = new Map()
+		if (releaseInternalData) this.chunks = new Map()
 		// write palette
 		mainChunk.writeString("RGBA")
 		mainChunk.writeInt32LE(1024) // content length
@@ -170,9 +167,6 @@ class VoxelModelWriter {
 			mainChunk.writeUInt8(element[1])
 			mainChunk.writeUInt8(element[2])
 			mainChunk.writeUInt8(255)
-			// if (index === 0) {
-			// 	mainChunk.writeUInt8(0)
-			// } else mainChunk.writeUInt8(255)
 		}
 
 		fileBuffer.writeInt32LE(0) // children length
