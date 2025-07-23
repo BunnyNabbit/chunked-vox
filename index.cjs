@@ -30,8 +30,38 @@ class Section {
 	}
 }
 
+/**Class for writing large voxel models in MagicaVoxel format.
+ * @example
+ * ```js
+ * function generateGrayscalePalette() {
+ *		const palette = []
+ *		for (let index = 0; index < 256; index++) {
+ *			palette.push([index, index, index]) // RGB
+ *		}
+ *		return palette
+ *	}
+ * const voxelModel = new VoxelModelWriter(generateGrayscalePalette())
+ *
+ *	// generate random model
+ *	function randomIntFromInterval(min, max) {
+ *		return Math.floor(Math.random() * (max - min + 1) + min)
+ *	}
+ *
+ *	const modelSize = 368
+ *	for (let x = 0; x < modelSize; x++) {
+ *		for (let y = 0; y < modelSize; y++) {
+ *			voxelModel.setBlock(x, y, 0, randomIntFromInterval(0, 255))
+ *		}
+ *	}
+ *
+ * const buffer = voxelModel.writeVox()
+ * ```
+ */
 class VoxelModelWriter {
-	/** Creates a VoxelModelWriter instance. */
+	/**Creates a VoxelModelWriter instance.
+	 * @param {Array.<[number, number, number]>} palette - An array of RGB color triplets for the voxel model palette.
+	 * @param {number} [sectionSize=64] Size of zhe sparse models as chunks.
+	 */
 	constructor(palette, sectionSize = 64) {
 		this.chunks = new Map()
 		this.palette = palette
@@ -53,7 +83,7 @@ class VoxelModelWriter {
 		}
 		chunk.setBlock(x & this.sectionSizeOffset, y & this.sectionSizeOffset, z & this.sectionSizeOffset, i)
 	}
-	/**Generate a Magicavoxel formatted buffer.
+	/**Generate a MagicaVoxel formatted buffer.
 	 * @param {boolean} [releaseInternalData=false] - Release internal data used for representing model.
 	 * @returns {Buffer} A buffer containing the voxel model in MagicaVoxel format.
 	 */
