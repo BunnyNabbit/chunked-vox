@@ -2,7 +2,7 @@
   "name": "chunked-vox",
   "version": "1.0.0",
   "description": "Writes large voxel models in Magicavoxel format",
-  "main": "index.js",
+  "main": "index.cjs",
   "scripts": {
     "test": "jest"
   },

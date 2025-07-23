@@ -1,4 +1,4 @@
-const { VoxelModelWriter } = require("./index.js")
+const { VoxelModelWriter } = require("./index.cjs")
 const fs = require("fs")
 
 function generateGrayscalePalette() {

@@ -1,4 +1,4 @@
-const { VoxelModelWriter } = require("./index.js")
+const { VoxelModelWriter } = require("./index.cjs")
 
 class Helper {
 	/** Helper function for creating a simple red palette */
