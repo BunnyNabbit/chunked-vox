@@ -5,7 +5,7 @@
 [![Test status badge](https://github.com/BunnyNabbit/chunked-vox/actions/workflows/ci.yml/badge.svg)](https://github.com/BunnyNabbit/chunked-vox/actions/workflows/ci.yml)
 [![Coverage status badge](https://coveralls.io/repos/github/BunnyNabbit/chunked-vox/badge.svg?branch=main)](https://coveralls.io/github/BunnyNabbit/chunked-vox?branch=main)
 
-Writes large voxel models in Magicavoxel format
+Writes large voxel models in MagicaVoxel format
 ```js
 const { VoxelModelWriter } = require("chunked-vox")
 const fs = require("fs")
