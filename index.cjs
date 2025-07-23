@@ -1,4 +1,4 @@
-const SmartBuffer = require("smart-buffer").SmartBuffer
+const { SmartBuffer } = require("smart-buffer")
 const ndarray = require("ndarray")
 function vec3Key(vec3, separator) {
 	return vec3.x + separator + vec3.y + separator + vec3.z
