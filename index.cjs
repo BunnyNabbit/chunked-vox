@@ -38,14 +38,13 @@ class VoxelModelWriter {
 		this.sectionSize = sectionSize
 		this.sectionSizeOffset = this.sectionSize - 1
 	}
-	/**Set a voxel wizh a color palette index.
-	 * @param {number} x - X coordinate of voxel
-	 * @param {number} x - Y coordinate of voxel
-	 * @param {number} x - Z coordinate of voxel
-	 * @param {number} i - Color palette index
+	/**Set a voxel wizh a color palette index. Z is gravity direction.
+	 * @param {number} x - X coordinate of voxel.
+	 * @param {number} x - Y coordinate of voxel.
+	 * @param {number} x - Z coordinate of voxel.
+	 * @param {number} i - Color palette index.
 	 */
 	setBlock(x, y, z, i) {
-		// MagicaVoxel coord system (Z is gravity direction)
 		const key = vec3Key(new Vector3(Math.floor(x / this.sectionSize), Math.floor(y / this.sectionSize), Math.floor(z / this.sectionSize)), " ")
 		let chunk = this.chunks.get(key)
 		if (!chunk) {
@@ -55,23 +54,10 @@ class VoxelModelWriter {
 		chunk.setBlock(x & this.sectionSizeOffset, y & this.sectionSizeOffset, z & this.sectionSizeOffset, i)
 	}
 	/**Generate a Magicavoxel formatted buffer.
-	 * @param {boolean} reset - Release internal data used for representing model.
+	 * @param {boolean} [reset=false] - Release internal data used for representing model.
 	 * @returns {Buffer} A buffer containing the voxel model in MagicaVoxel format.
 	 */
-	writeVox(reset) {
-		// if reset, internal data will be released during writing.
-		function writeAsciiString(buffer, str) {
-			const asciiBuffer = Buffer.from(str, "ascii")
-			buffer.writeInt32LE(asciiBuffer.length)
-			buffer.writeBuffer(asciiBuffer)
-		}
-		function writeDict(buffer, object = {}) {
-			buffer.writeInt32LE(Object.keys(object).length)
-			for (const [key, value] of Object.entries(object)) {
-				writeAsciiString(buffer, key)
-				writeAsciiString(buffer, value)
-			}
-		}
+	writeVox(reset = false) {
 		const fileBuffer = new SmartBuffer()
 		fileBuffer.writeString("VOX ")
 		fileBuffer.writeInt32LE(150) // version
@@ -114,12 +100,12 @@ class VoxelModelWriter {
 		mainChunk.writeString("nTRN")
 		const transformRootNodeChunk = new SmartBuffer()
 		transformRootNodeChunk.writeInt32LE(0) // transform index
-		writeDict(transformRootNodeChunk, {})
+		VoxelModelWriter.writeDict(transformRootNodeChunk, {})
 		transformRootNodeChunk.writeInt32LE(1) // node index of the group
 		transformRootNodeChunk.writeInt32LE(-1) // reserved index (unused?)
 		transformRootNodeChunk.writeInt32LE(-1) // layer index (not used)
 		transformRootNodeChunk.writeInt32LE(1) // number of frames (always 1)
-		writeDict(transformRootNodeChunk, {})
+		VoxelModelWriter.writeDict(transformRootNodeChunk, {})
 		mainChunk.writeInt32LE(transformRootNodeChunk.length) // content length
 		mainChunk.writeInt32LE(0) // children length
 		mainChunk.writeBuffer(transformRootNodeChunk.toBuffer())
@@ -127,7 +113,7 @@ class VoxelModelWriter {
 		mainChunk.writeString("nGRP")
 		const groupNodeChunk = new SmartBuffer()
 		groupNodeChunk.writeInt32LE(1) // node index of the shape
-		writeDict(groupNodeChunk, {})
+		VoxelModelWriter.writeDict(groupNodeChunk, {})
 		groupNodeChunk.writeInt32LE(this.chunks.size) // number of children nodes
 		// console.log(this.chunks.size)
 		for (let index = 0; index < this.chunks.size; index++) {
@@ -144,7 +130,7 @@ class VoxelModelWriter {
 			mainChunk.writeString("nTRN")
 			const transformNodeChunk = new SmartBuffer()
 			transformNodeChunk.writeInt32LE(nodeIndex)
-			writeDict(transformNodeChunk, {})
+			VoxelModelWriter.writeDict(transformNodeChunk, {})
 			transformNodeChunk.writeInt32LE(nodeIndex + 1) // node index of the shape
 			transformNodeChunk.writeInt32LE(-1) // reserved index (unused?)
 			transformNodeChunk.writeInt32LE(-1) // layer index (not used)
@@ -152,7 +138,7 @@ class VoxelModelWriter {
 			// a frame
 			const vec3 = keyToVec3(key, " ")
 			// console.log(vec3)
-			writeDict(transformNodeChunk, {
+			VoxelModelWriter.writeDict(transformNodeChunk, {
 				_t: vec3Key({ x: vec3.x * this.sectionSize, y: vec3.y * this.sectionSize, z: vec3.z * this.sectionSize + Math.floor(this.sectionSize / 2) }, " "),
 			})
 			mainChunk.writeInt32LE(transformNodeChunk.length) // content length
@@ -163,12 +149,12 @@ class VoxelModelWriter {
 			let shapeNodeChunk = new SmartBuffer()
 			mainChunk.writeString("nSHP")
 			shapeNodeChunk.writeInt32LE(nodeIndex)
-			writeDict(shapeNodeChunk, {})
+			VoxelModelWriter.writeDict(shapeNodeChunk, {})
 			nodeIndex++
 			shapeNodeChunk.writeInt32LE(1) // model count. shape nodes always have 1
 			shapeNodeChunk.writeInt32LE(modelIndex)
 			modelIndex++
-			writeDict(shapeNodeChunk, {})
+			VoxelModelWriter.writeDict(shapeNodeChunk, {})
 			mainChunk.writeInt32LE(shapeNodeChunk.length) // content length
 			mainChunk.writeInt32LE(0) // children length
 			mainChunk.writeBuffer(shapeNodeChunk.toBuffer())
@@ -193,6 +179,26 @@ class VoxelModelWriter {
 		fileBuffer.writeInt32LE(mainChunk.length)
 		fileBuffer.writeBuffer(mainChunk.toBuffer())
 		return fileBuffer.toBuffer()
+	}
+	/**Writes a key-value dictionary structure to zhe buffer.
+	 * @param {SmartBuffer} buffer - Zhe buffer to write zhe dictionary wizh.
+	 * @param {{}} [object={}] Zhe object used as a key-value dictionary.
+	 */
+	static writeDict(buffer, object = {}) {
+		buffer.writeInt32LE(Object.keys(object).length)
+		for (const [key, value] of Object.entries(object)) {
+			VoxelModelWriter.writeAsciiString(buffer, key)
+			VoxelModelWriter.writeAsciiString(buffer, value)
+		}
+	}
+	/**Writes an ASCII-formatted string to zhe buffer.
+	 * @param {SmartBuffer} buffer - Zhe buffer used for writing zhe string to.
+	 * @param {string} string - Zhe string to write wizh.
+	 */
+	static writeAsciiString(buffer, string) {
+		const asciiBuffer = Buffer.from(string, "ascii")
+		buffer.writeInt32LE(asciiBuffer.length)
+		buffer.writeBuffer(asciiBuffer)
 	}
 }
 
