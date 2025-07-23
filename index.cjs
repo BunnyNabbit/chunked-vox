@@ -1,18 +1,20 @@
 const { SmartBuffer } = require("smart-buffer")
 const ndarray = require("ndarray")
-function vec3Key(vec3, separator) {
-	return vec3.x + separator + vec3.y + separator + vec3.z
-}
-function keyToVec3(key, separator) {
-	let components = key.split(separator)
-	return new Vector3(components[0], components[1], components[2])
-}
 class Vector3 {
 	/** */
 	constructor(x, y, z) {
 		this.x = x
 		this.y = y
 		this.z = z
+	}
+
+	static toKey(vec3, separator) {
+		return vec3.x + separator + vec3.y + separator + vec3.z
+	}
+
+	static fromKey(key, separator) {
+		let components = key.split(separator)
+		return new Vector3(components[0], components[1], components[2])
 	}
 }
 class Section {
@@ -75,7 +77,7 @@ class VoxelModelWriter {
 	 * @param {number} i - Color palette index.
 	 */
 	setBlock(x, y, z, i) {
-		const key = vec3Key(new Vector3(Math.floor(x / this.sectionSize), Math.floor(y / this.sectionSize), Math.floor(z / this.sectionSize)), " ")
+		const key = Vector3.toKey(new Vector3(Math.floor(x / this.sectionSize), Math.floor(y / this.sectionSize), Math.floor(z / this.sectionSize)), " ")
 		let chunk = this.chunks.get(key)
 		if (!chunk) {
 			chunk = new Section(this.sectionSize)
@@ -164,9 +166,9 @@ class VoxelModelWriter {
 			transformNodeChunk.writeInt32LE(-1) // layer index (not used)
 			transformNodeChunk.writeInt32LE(1) // number of frames (always 1)
 			// a frame
-			const vec3 = keyToVec3(key, " ")
+			const vec3 = Vector3.fromKey(key, " ")
 			VoxelModelWriter.writeDict(transformNodeChunk, {
-				_t: vec3Key({ x: vec3.x * this.sectionSize, y: vec3.y * this.sectionSize, z: vec3.z * this.sectionSize + Math.floor(this.sectionSize / 2) }, " "),
+				_t: Vector3.toKey({ x: vec3.x * this.sectionSize, y: vec3.y * this.sectionSize, z: vec3.z * this.sectionSize + Math.floor(this.sectionSize / 2) }, " "),
 			})
 			mainChunk.writeInt32LE(transformNodeChunk.length) // content length
 			mainChunk.writeInt32LE(0) // children length
