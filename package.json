@@ -11,6 +11,15 @@
   "keywords": [
     "magicavoxel"
   ],
+  "homepage": "https://github.com/BunnyNabbit/chunked-vox",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BunnyNabbit/chunked-vox.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BunnyNabbit/chunked-vox/issues",
+    "email": "aon@bunnynabbit.com"
+  },
   "dependencies": {
     "ndarray": "^1.0.19",
     "smart-buffer": "^4.2.0"
