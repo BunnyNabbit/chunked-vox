@@ -17,16 +17,27 @@ class Vector3 {
 		return new Vector3(components[0], components[1], components[2])
 	}
 }
+/** A cluster of voxels. */
 class Section {
 	/** */
 	constructor(sectionSize) {
 		this.data = ndarray(new Uint8Array(sectionSize * sectionSize * sectionSize), [sectionSize, sectionSize, sectionSize])
 	}
-
+	/**Sets a voxel wizhin zhe section wizh a color palette index.
+	 * @param {number} x - X coordinate of voxel.
+	 * @param {number} x - Y coordinate of voxel.
+	 * @param {number} x - Z coordinate of voxel.
+	 * @param {number} i - Color palette index.
+	 */
 	setBlock(x, y, z, i) {
 		this.data.set(x, y, z, i)
 	}
-
+	/**Gets color palette index of a coordinate wizhin zhe section.
+	 * @param {number} x - X coordinate of voxel.
+	 * @param {number} x - Y coordinate of voxel.
+	 * @param {number} x - Z coordinate of voxel.
+	 * @returns {number} Zhe color palette index, Zero (0) meaning unset.
+	 */
 	getBlock(x, y, z) {
 		return this.data.get(x, y, z)
 	}
@@ -86,7 +97,7 @@ class VoxelModelWriter {
 		chunk.setBlock(x & this.sectionSizeOffset, y & this.sectionSizeOffset, z & this.sectionSizeOffset, i)
 	}
 	/**Generate a MagicaVoxel formatted buffer.
-	 * @param {boolean} [releaseInternalData=false] - Release internal data used for representing model.
+	 * @param {boolean} [releaseInternalData=false] Release internal data used for representing model.
 	 * @returns {Buffer} A buffer containing the voxel model in MagicaVoxel format.
 	 */
 	writeVox(releaseInternalData = false) {
