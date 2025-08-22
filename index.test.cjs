@@ -58,6 +58,8 @@ describe("VoxelModelWriter", () => {
 			],
 			[{ x: 1, y: 0, z: 0, colorIndex: 3 }],
 		])
+		const vox = writer.writeVox()
+		expect(vox).toMatchSnapshot()
 	})
 
 	test("writeVox resets chunks when reset=true", () => {
