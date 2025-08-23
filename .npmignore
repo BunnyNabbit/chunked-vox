@@ -1,0 +1,6 @@
+*.test.cjs
+__snapshots__/
+jest.config.mjs
+.github/
+.gitattributes
+.prettierrc.mjs
