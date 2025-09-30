@@ -6,3 +6,4 @@ jest.config.mjs
 .prettierrc.mjs
 docs/
 docsTheme/
+coverage/
