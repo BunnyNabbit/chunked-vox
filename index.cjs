@@ -23,7 +23,7 @@ class Section {
 	constructor(sectionSize) {
 		this.data = ndarray(new Uint8Array(sectionSize * sectionSize * sectionSize), [sectionSize, sectionSize, sectionSize])
 	}
-	/**Sets a voxel wizhin zhe section wizh a color palette index.
+	/**Sets a voxel within the section with a color palette index.
 	 * @param {number} x - X coordinate of voxel.
 	 * @param {number} x - Y coordinate of voxel.
 	 * @param {number} x - Z coordinate of voxel.
@@ -32,11 +32,11 @@ class Section {
 	setBlock(x, y, z, i) {
 		this.data.set(x, y, z, i)
 	}
-	/**Gets color palette index of a coordinate wizhin zhe section.
+	/**Gets color palette index of a coordinate within the section.
 	 * @param {number} x - X coordinate of voxel.
 	 * @param {number} x - Y coordinate of voxel.
 	 * @param {number} x - Z coordinate of voxel.
-	 * @returns {number} Zhe color palette index, Zero (0) meaning unset.
+	 * @returns {number} The color palette index, Zero (0) meaning unset.
 	 */
 	getBlock(x, y, z) {
 		return this.data.get(x, y, z)
@@ -73,7 +73,7 @@ class Section {
 class VoxelModelWriter {
 	/**Creates a VoxelModelWriter instance.
 	 * @param {Array.<[number, number, number]>} palette - An array of RGB color triplets for the voxel model palette.
-	 * @param {number} [sectionSize=64] Size of zhe sparse models as chunks.
+	 * @param {number} [sectionSize=64] Size of the sparse models as chunks.
 	 */
 	constructor(palette, sectionSize = 64) {
 		this.chunks = new Map()
@@ -81,7 +81,7 @@ class VoxelModelWriter {
 		this.sectionSize = sectionSize
 		this.sectionSizeOffset = this.sectionSize - 1
 	}
-	/**Set a voxel wizh a color palette index. Z is gravity direction.
+	/**Set a voxel with a color palette index. Z is gravity direction.
 	 * @param {number} x - X coordinate of voxel.
 	 * @param {number} x - Y coordinate of voxel.
 	 * @param {number} x - Z coordinate of voxel.
@@ -217,9 +217,9 @@ class VoxelModelWriter {
 		fileBuffer.writeBuffer(mainChunk.toBuffer())
 		return fileBuffer.toBuffer()
 	}
-	/**Writes a key-value dictionary structure to zhe buffer.
-	 * @param {SmartBuffer} buffer - Zhe buffer to write zhe dictionary wizh.
-	 * @param {{}} [object={}] Zhe object used as a key-value dictionary.
+	/**Writes a key-value dictionary structure to the buffer.
+	 * @param {SmartBuffer} buffer - The buffer to write the dictionary with.
+	 * @param {{}} [object={}] The object used as a key-value dictionary.
 	 */
 	static writeDict(buffer, object = {}) {
 		buffer.writeInt32LE(Object.keys(object).length)
@@ -228,9 +228,9 @@ class VoxelModelWriter {
 			VoxelModelWriter.writeAsciiString(buffer, value)
 		}
 	}
-	/**Writes an ASCII-formatted string to zhe buffer.
-	 * @param {SmartBuffer} buffer - Zhe buffer used for writing zhe string to.
-	 * @param {string} string - Zhe string to write wizh.
+	/**Writes an ASCII-formatted string to the buffer.
+	 * @param {SmartBuffer} buffer - The buffer used for writing the string to.
+	 * @param {string} string - The string to write with.
 	 */
 	static writeAsciiString(buffer, string) {
 		const asciiBuffer = Buffer.from(string, "ascii")
