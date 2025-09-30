@@ -4,3 +4,5 @@ jest.config.mjs
 .github/
 .gitattributes
 .prettierrc.mjs
+docs/
+docsTheme/

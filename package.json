@@ -4,14 +4,15 @@
   "description": "Writes large voxel models in Magicavoxel format",
   "main": "index.cjs",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build-docs": "typedoc"
   },
   "author": "BunnyNabbit",
   "license": "MIT",
   "keywords": [
     "magicavoxel"
   ],
-  "homepage": "https://github.com/BunnyNabbit/chunked-vox",
+  "homepage": "https://bunnynabbit.github.io/chunked-vox/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BunnyNabbit/chunked-vox.git"
@@ -27,6 +28,8 @@
   "devDependencies": {
     "jest": "^30.0.4",
     "prettier": "^3.6.2",
-    "prettier-plugin-drone-class": "^0.1.0"
+    "prettier-plugin-drone-class": "^0.1.0",
+    "typedoc": "^0.28.13",
+    "typescript": "^5.9.3"
   }
 }

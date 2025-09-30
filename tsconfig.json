@@ -1,0 +1,32 @@
+{
+	"compilerOptions": {
+		"noEmit": true,
+		"allowJs": true,
+		"checkJs": false,
+		"target": "esnext",
+		"lib": [
+			"ESNext",
+		],
+		"module": "nodenext",
+		"moduleResolution": "nodenext",
+		"isolatedModules": true,
+		"strict": false,
+		"skipLibCheck": true,
+		"strictBindCallApply": true
+	},
+	"include": [
+		"index.cjs",
+	],
+	"typedocOptions": {
+		"entryPoints": [
+			"index.cjs",
+		],
+		"jsDocCompatibility": {
+			"exampleTag": true,
+			"defaultTag": true,
+			"inheritDocTag": true,
+			"ignoreUnescapedBraces": true
+		},
+		"customCss": "./docsTheme/main.css"
+	}
+}
