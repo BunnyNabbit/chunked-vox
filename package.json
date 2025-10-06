@@ -12,6 +12,9 @@
   "keywords": [
     "magicavoxel"
   ],
+  "engines": {
+    "node": ">=18"
+  },
   "homepage": "https://bunnynabbit.github.io/chunked-vox/",
   "repository": {
     "type": "git",
