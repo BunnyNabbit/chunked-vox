@@ -7,3 +7,4 @@ jest.config.mjs
 docs/
 docsTheme/
 coverage/
+.release-it.json
