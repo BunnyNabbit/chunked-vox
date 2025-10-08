@@ -1,6 +1,6 @@
 {
-	"npm": {
-		"skipChecks": true
+	"plugins": {
+		"release-it-pnpm": {}
 	},
 	"github": {
 		"draft": true
