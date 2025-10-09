@@ -30,6 +30,7 @@
     "smart-buffer": "^4.2.0"
   },
   "devDependencies": {
+    "@types/ndarray": "^1.0.14",
     "jest": "^30.0.4",
     "prettier": "^3.6.2",
     "prettier-plugin-drone-class": "^0.1.0",
