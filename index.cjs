@@ -1,32 +1,44 @@
 const { SmartBuffer } = require("smart-buffer")
 const ndarray = require("ndarray")
 class Vector3 {
-	/** */
+	/**@todo Yet to be documented.
+	 * @param {number} x
+	 * @param {number} y
+	 * @param {number} z
+	 */
 	constructor(x, y, z) {
 		this.x = x
 		this.y = y
 		this.z = z
 	}
-
+	/**@todo Yet to be documented.
+	 * @param {Vector3} vec3
+	 * @param {string} separator
+	 */
 	static toKey(vec3, separator) {
 		return vec3.x + separator + vec3.y + separator + vec3.z
 	}
-
+	/**@todo Yet to be documented.
+	 * @param {string} key
+	 * @param {string} separator
+	 */
 	static fromKey(key, separator) {
-		let components = key.split(separator)
+		let components = key.split(separator).map((component) => parseInt(component))
 		return new Vector3(components[0], components[1], components[2])
 	}
 }
 /** A cluster of voxels. */
 class Section {
-	/** */
+	/**@todo Yet to be documented.
+	 * @param {number} sectionSize
+	 */
 	constructor(sectionSize) {
 		this.data = ndarray(new Uint8Array(sectionSize * sectionSize * sectionSize), [sectionSize, sectionSize, sectionSize])
 	}
 	/**Sets a voxel within the section with a color palette index.
 	 * @param {number} x - X coordinate of voxel.
-	 * @param {number} x - Y coordinate of voxel.
-	 * @param {number} x - Z coordinate of voxel.
+	 * @param {number} y - Y coordinate of voxel.
+	 * @param {number} z - Z coordinate of voxel.
 	 * @param {number} i - Color palette index.
 	 */
 	setBlock(x, y, z, i) {
@@ -34,8 +46,8 @@ class Section {
 	}
 	/**Gets color palette index of a coordinate within the section.
 	 * @param {number} x - X coordinate of voxel.
-	 * @param {number} x - Y coordinate of voxel.
-	 * @param {number} x - Z coordinate of voxel.
+	 * @param {number} y - Y coordinate of voxel.
+	 * @param {number} z - Z coordinate of voxel.
 	 * @returns {number} The color palette index, Zero (0) meaning unset.
 	 */
 	getBlock(x, y, z) {
@@ -83,8 +95,8 @@ class VoxelModelWriter {
 	}
 	/**Set a voxel with a color palette index. Z is gravity direction.
 	 * @param {number} x - X coordinate of voxel.
-	 * @param {number} x - Y coordinate of voxel.
-	 * @param {number} x - Z coordinate of voxel.
+	 * @param {number} y - Y coordinate of voxel.
+	 * @param {number} z - Z coordinate of voxel.
 	 * @param {number} i - Color palette index.
 	 */
 	setBlock(x, y, z, i) {

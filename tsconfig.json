@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"noEmit": true,
 		"allowJs": true,
-		"checkJs": false,
+		"checkJs": true,
 		"target": "esnext",
 		"lib": [
 			"ESNext",
@@ -10,7 +10,7 @@
 		"module": "nodenext",
 		"moduleResolution": "nodenext",
 		"isolatedModules": true,
-		"strict": false,
+		"strict": true,
 		"skipLibCheck": true,
 		"strictBindCallApply": true
 	},
