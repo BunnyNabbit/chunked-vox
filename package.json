@@ -5,7 +5,8 @@
   "main": "index.cjs",
   "scripts": {
     "test": "jest",
-    "build-docs": "typedoc"
+    "build-docs": "typedoc",
+    "release": "release-it"
   },
   "author": "BunnyNabbit",
   "license": "MIT",
