@@ -32,12 +32,12 @@
   },
   "devDependencies": {
     "@types/ndarray": "^1.0.14",
-    "jest": "^30.0.4",
-    "prettier": "^3.6.2",
+    "jest": "^30.2.0",
+    "prettier": "^3.7.4",
     "prettier-plugin-drone-class": "^0.1.0",
-    "release-it": "^19.0.5",
+    "release-it": "^19.1.0",
     "release-it-pnpm": "^4.6.6",
-    "typedoc": "^0.28.13",
+    "typedoc": "^0.28.15",
     "typescript": "^5.9.3"
   },
   "publishConfig": {
