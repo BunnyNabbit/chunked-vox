@@ -1,5 +1,6 @@
 *.test.cjs
 __snapshots__/
+__file_snapshots__/
 jest.config.mjs
 .github/
 .gitattributes

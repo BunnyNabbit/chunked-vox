@@ -11,6 +11,7 @@ export const config = {
 	coverageDirectory: "coverage",
 	// Indicates which provider should be used to instrument code for coverage
 	coverageProvider: "v8",
+	watchPathIgnorePatterns: ["__file_snapshots__"],
 }
 
 export default config

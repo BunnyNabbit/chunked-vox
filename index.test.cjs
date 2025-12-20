@@ -1,4 +1,6 @@
 const { VoxelModelWriter } = require("./index.cjs")
+const { toMatchFile } = require("jest-file-snapshot")
+expect.extend({ toMatchFile })
 
 class Helper {
 	/** Helper function for creating a simple red palette */
@@ -59,7 +61,7 @@ describe("VoxelModelWriter", () => {
 			[{ x: 1, y: 0, z: 0, colorIndex: 3 }],
 		])
 		const vox = writer.writeVox()
-		expect(vox).toMatchSnapshot()
+		expect(vox).toMatchFile()
 	})
 
 	test("writeVox resets chunks when reset=true", () => {
