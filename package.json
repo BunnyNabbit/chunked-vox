@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "build-docs": "typedoc",
-    "release": "release-it"
+    "release": "release-it",
+    "type-check": "tsc"
   },
   "author": "BunnyNabbit",
   "license": "MIT",
