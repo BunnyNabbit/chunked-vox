@@ -1,5 +1,6 @@
 const { VoxelModelWriter } = require("./index.cjs")
 const { toMatchFile } = require("jest-file-snapshot")
+const { describe, it, beforeEach, expect, test } = require("@jest/globals")
 expect.extend({ toMatchFile })
 
 class Helper {
