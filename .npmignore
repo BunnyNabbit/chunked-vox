@@ -9,3 +9,4 @@ docs/
 docsTheme/
 coverage/
 .release-it.json
+eslint.config.mjs
