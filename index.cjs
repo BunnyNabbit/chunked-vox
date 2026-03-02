@@ -2,6 +2,7 @@ const { SmartBuffer } = require("smart-buffer")
 const ndarray = require("ndarray")
 class Vector3 {
 	/**@todo Yet to be documented.
+	 *
 	 * @param {number} x
 	 * @param {number} y
 	 * @param {number} z
@@ -12,6 +13,7 @@ class Vector3 {
 		this.z = z
 	}
 	/**@todo Yet to be documented.
+	 *
 	 * @param {Vector3} vec3
 	 * @param {string} separator
 	 */
@@ -19,6 +21,7 @@ class Vector3 {
 		return vec3.x + separator + vec3.y + separator + vec3.z
 	}
 	/**@todo Yet to be documented.
+	 *
 	 * @param {string} key
 	 * @param {string} separator
 	 */
@@ -30,12 +33,14 @@ class Vector3 {
 /** A cluster of voxels. */
 class Section {
 	/**@todo Yet to be documented.
+	 *
 	 * @param {number} sectionSize
 	 */
 	constructor(sectionSize) {
 		this.data = ndarray(new Uint8Array(sectionSize * sectionSize * sectionSize), [sectionSize, sectionSize, sectionSize])
 	}
 	/**Sets a voxel within the section with a color palette index.
+	 *
 	 * @param {number} x - X coordinate of voxel.
 	 * @param {number} y - Y coordinate of voxel.
 	 * @param {number} z - Z coordinate of voxel.
@@ -45,6 +50,7 @@ class Section {
 		this.data.set(x, y, z, i)
 	}
 	/**Gets color palette index of a coordinate within the section.
+	 *
 	 * @param {number} x - X coordinate of voxel.
 	 * @param {number} y - Y coordinate of voxel.
 	 * @param {number} z - Z coordinate of voxel.
@@ -56,36 +62,39 @@ class Section {
 }
 
 /**Class for writing large voxel models in MagicaVoxel format.
+ *
  * @example
+ *
  * ```js
  * function generateGrayscalePalette() {
- *		const palette = []
- *		for (let index = 0; index < 256; index++) {
- *			palette.push([index, index, index]) // RGB
- *		}
- *		return palette
- *	}
+ * 	const palette = []
+ * 	for (let index = 0; index < 256; index++) {
+ * 		palette.push([index, index, index]) // RGB
+ * 	}
+ * 	return palette
+ * }
  * const voxelModel = new VoxelModelWriter(generateGrayscalePalette())
  *
- *	// generate random model
- *	function randomIntFromInterval(min, max) {
- *		return Math.floor(Math.random() * (max - min + 1) + min)
- *	}
+ * // generate random model
+ * function randomIntFromInterval(min, max) {
+ * 	return Math.floor(Math.random() * (max - min + 1) + min)
+ * }
  *
- *	const modelSize = 368
- *	for (let x = 0; x < modelSize; x++) {
- *		for (let y = 0; y < modelSize; y++) {
- *			voxelModel.setBlock(x, y, 0, randomIntFromInterval(0, 255))
- *		}
- *	}
+ * const modelSize = 368
+ * for (let x = 0; x < modelSize; x++) {
+ * 	for (let y = 0; y < modelSize; y++) {
+ * 		voxelModel.setBlock(x, y, 0, randomIntFromInterval(0, 255))
+ * 	}
+ * }
  *
  * const buffer = voxelModel.writeVox()
  * ```
  */
 class VoxelModelWriter {
 	/**Creates a VoxelModelWriter instance.
-	 * @param {Array.<[number, number, number]>} palette - An array of RGB color triplets for the voxel model palette.
-	 * @param {number} [sectionSize=64] Size of the sparse models as chunks.
+	 *
+	 * @param {[number, number, number][]} palette - An array of RGB color triplets for the voxel model palette.
+	 * @param {number} [sectionSize=64] Size of the sparse models as chunks. Default is `64`
 	 */
 	constructor(palette, sectionSize = 64) {
 		this.chunks = new Map()
@@ -94,6 +103,7 @@ class VoxelModelWriter {
 		this.sectionSizeOffset = this.sectionSize - 1
 	}
 	/**Set a voxel with a color palette index. Z is gravity direction.
+	 *
 	 * @param {number} x - X coordinate of voxel.
 	 * @param {number} y - Y coordinate of voxel.
 	 * @param {number} z - Z coordinate of voxel.
@@ -109,7 +119,8 @@ class VoxelModelWriter {
 		chunk.setBlock(x & this.sectionSizeOffset, y & this.sectionSizeOffset, z & this.sectionSizeOffset, i)
 	}
 	/**Generate a MagicaVoxel formatted buffer.
-	 * @param {boolean} [releaseInternalData=false] Release internal data used for representing model.
+	 *
+	 * @param {boolean} [releaseInternalData=false] Release internal data used for representing model. Default is `false`
 	 * @returns {Buffer} A buffer containing the voxel model in MagicaVoxel format.
 	 */
 	writeVox(releaseInternalData = false) {
@@ -230,8 +241,9 @@ class VoxelModelWriter {
 		return fileBuffer.toBuffer()
 	}
 	/**Writes a key-value dictionary structure to the buffer.
+	 *
 	 * @param {SmartBuffer} buffer - The buffer to write the dictionary with.
-	 * @param {{}} [object={}] The object used as a key-value dictionary.
+	 * @param {{}} [object={}] The object used as a key-value dictionary. Default is `{}`
 	 */
 	static writeDict(buffer, object = {}) {
 		buffer.writeInt32LE(Object.keys(object).length)
@@ -241,6 +253,7 @@ class VoxelModelWriter {
 		}
 	}
 	/**Writes an ASCII-formatted string to the buffer.
+	 *
 	 * @param {SmartBuffer} buffer - The buffer used for writing the string to.
 	 * @param {string} string - The string to write with.
 	 */

@@ -4,9 +4,7 @@
 		"allowJs": true,
 		"checkJs": true,
 		"target": "esnext",
-		"lib": [
-			"ESNext",
-		],
+		"lib": ["ESNext"],
 		"module": "nodenext",
 		"moduleResolution": "nodenext",
 		"isolatedModules": true,
@@ -14,13 +12,9 @@
 		"skipLibCheck": true,
 		"strictBindCallApply": true
 	},
-	"include": [
-		"index.cjs",
-	],
+	"include": ["index.cjs"],
 	"typedocOptions": {
-		"entryPoints": [
-			"index.cjs",
-		],
+		"entryPoints": ["index.cjs"],
 		"jsDocCompatibility": {
 			"exampleTag": true,
 			"defaultTag": true,
