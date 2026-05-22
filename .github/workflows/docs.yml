@@ -30,7 +30,7 @@ jobs:
           fetch-depth: 1
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v6
         with:
           run_install: |
             - args: [--frozen-lockfile]
