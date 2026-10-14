@@ -1,7 +1,7 @@
 # chunked-vox
 
 [![NPM version badge](https://img.shields.io/npm/v/chunked-vox.svg)](http://npmjs.com/package/chunked-vox)
-[![Open GitHub issues badge](https://img.shields.io/github/issues/bunnynabbit/chunked-vox)](https://github.com/BunnyNabbit/chunked-vox/issues)
+[![Open issues badge](https://img.shields.io/gitea/issues/open/BunnyNabbit/chunked-vox?gitea_url=https%3A%2F%2Fcodeberg.org)](https://codeberg.org/BunnyNabbit/chunked-vox/issues)
 [![Test status badge](https://github.com/BunnyNabbit/chunked-vox/actions/workflows/ci.yml/badge.svg)](https://github.com/BunnyNabbit/chunked-vox/actions/workflows/ci.yml)
 [![Coverage status badge](https://coveralls.io/repos/github/BunnyNabbit/chunked-vox/badge.svg?branch=main)](https://coveralls.io/github/BunnyNabbit/chunked-vox?branch=main)
 

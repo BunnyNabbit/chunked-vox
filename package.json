@@ -20,10 +20,10 @@
   "homepage": "https://bunnynabbit.github.io/chunked-vox/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/BunnyNabbit/chunked-vox.git"
+    "url": "git+https://codeberg.org/BunnyNabbit/chunked-vox.git"
   },
   "bugs": {
-    "url": "https://github.com/BunnyNabbit/chunked-vox/issues",
+    "url": "https://codeberg.org/BunnyNabbit/chunked-vox/issues",
     "email": "aon@bunnynabbit.com"
   },
   "packageManager": "pnpm@10.30.3+sha512.c961d1e0a2d8e354ecaa5166b822516668b7f44cb5bd95122d590dd81922f606f5473b6d23ec4a5be05e7fcd18e8488d47d978bbe981872f1145d06e9a740017",
